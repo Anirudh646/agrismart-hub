@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Sprout, ArrowLeft, User, Mail, Lock, Phone, MapPin, Eye, EyeOff, Check } from "lucide-react";
+import { Sprout, ArrowLeft, User, Mail, Lock, Phone, MapPin, Eye, EyeOff, Check, Loader2 } from "lucide-react";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
@@ -17,15 +19,29 @@ const Register = () => {
     state: "",
     district: "",
     village: "",
-    aadhar: "",
   });
+  const { signUp } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (step < 2) {
       setStep(step + 1);
     } else {
-      console.log("Registration submitted:", formData);
+      setIsLoading(true);
+
+      const { error } = await signUp(formData.email, formData.password, {
+        full_name: formData.name,
+        phone: formData.phone,
+        state: formData.state,
+        district: formData.district,
+        village: formData.village,
+      });
+
+      if (!error) {
+        navigate("/login");
+      }
+      setIsLoading(false);
     }
   };
 
@@ -82,6 +98,7 @@ const Register = () => {
                         className="pl-10 h-12"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        required
                       />
                     </div>
                   </div>
@@ -102,7 +119,7 @@ const Register = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email Address (Optional)</Label>
+                    <Label htmlFor="email">Email Address</Label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                       <Input
@@ -112,6 +129,7 @@ const Register = () => {
                         className="pl-10 h-12"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        required
                       />
                     </div>
                   </div>
@@ -127,6 +145,8 @@ const Register = () => {
                         className="pl-10 pr-10 h-12"
                         value={formData.password}
                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                        required
+                        minLength={6}
                       />
                       <button
                         type="button"
@@ -186,19 +206,6 @@ const Register = () => {
                       />
                     </div>
                   </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="aadhar">Aadhar Number (Optional)</Label>
-                    <Input
-                      id="aadhar"
-                      type="text"
-                      placeholder="XXXX-XXXX-XXXX"
-                      className="h-12"
-                      value={formData.aadhar}
-                      onChange={(e) => setFormData({ ...formData, aadhar: e.target.value })}
-                    />
-                    <p className="text-xs text-muted-foreground">Used for scheme eligibility verification</p>
-                  </div>
                 </>
               )}
 
@@ -214,8 +221,17 @@ const Register = () => {
                     Back
                   </Button>
                 )}
-                <Button type="submit" variant="hero" className="flex-1" size="lg">
-                  {step < 2 ? "Continue" : "Create Account"}
+                <Button type="submit" variant="hero" className="flex-1" size="lg" disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                      Creating...
+                    </>
+                  ) : step < 2 ? (
+                    "Continue"
+                  ) : (
+                    "Create Account"
+                  )}
                 </Button>
               </div>
             </form>
