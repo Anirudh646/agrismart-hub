@@ -14,6 +14,7 @@ import AIAdvisory from "./pages/AIAdvisory";
 import MarketPrices from "./pages/MarketPrices";
 import Schemes from "./pages/Schemes";
 import Weather from "./pages/Weather";
+import DiseaseDetection from "./pages/DiseaseDetection";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -49,6 +50,7 @@ const App = () => (
             <Route path="/market-prices" element={<MarketPrices />} />
             <Route path="/schemes" element={<Schemes />} />
             <Route path="/weather" element={<Weather />} />
+            <Route path="/disease-detection" element={<DiseaseDetection />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

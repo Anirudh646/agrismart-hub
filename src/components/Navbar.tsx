@@ -50,6 +50,9 @@ const Navbar = () => {
             <Link to="/ai-advisory" className="text-muted-foreground hover:text-primary transition-colors font-medium">
               AI Advisory
             </Link>
+            <Link to="/disease-detection" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+              Disease Detection
+            </Link>
           </div>
 
           {/* Auth Buttons */}
@@ -119,6 +122,9 @@ const Navbar = () => {
               </Link>
               <Link to="/ai-advisory" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
                 AI Advisory
+              </Link>
+              <Link to="/disease-detection" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
+                Disease Detection
               </Link>
               
               <div className="flex gap-3 pt-4 border-t border-border">
