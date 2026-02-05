@@ -1,0 +1,105 @@
+{
+  "common": {
+    "home": "Home",
+    "schemes": "Schemes",
+    "marketPrices": "Market Prices",
+    "weather": "Weather",
+    "aiAdvisory": "AI Advisory",
+    "diseaseDetection": "Disease Detection",
+    "dashboard": "Dashboard",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "search": "Search",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "hero": {
+    "title": "Empowering Farmers with Technology",
+    "subtitle": "Your one-stop portal for government schemes, market prices, weather updates, and AI-powered crop advisory",
+    "getStarted": "Get Started",
+    "exploreSchemes": "Explore Schemes"
+  },
+  "features": {
+    "schemes": "Government Schemes",
+    "schemesDesc": "Access all agricultural schemes and subsidies in one place",
+    "marketPrices": "Live Market Prices",
+    "marketPricesDesc": "Real-time mandi prices for informed selling decisions",
+    "weather": "Weather Forecasts",
+    "weatherDesc": "Accurate weather predictions for better planning",
+    "aiAdvisory": "AI Crop Advisory",
+    "aiAdvisoryDesc": "Personalized recommendations powered by AI",
+    "diseaseDetection": "Disease Detection",
+    "diseaseDetectionDesc": "AI-powered crop disease identification",
+    "riskScore": "Risk Assessment",
+    "riskScoreDesc": "Comprehensive farming risk analysis"
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "myCrops": "My Crops",
+    "addCrop": "Add Crop",
+    "cropName": "Crop Name",
+    "area": "Area (Acres)",
+    "sowingDate": "Sowing Date",
+    "harvestDate": "Expected Harvest",
+    "status": "Status",
+    "myQueries": "My Queries",
+    "submitQuery": "Submit Query",
+    "riskScore": "Farm Risk Score",
+    "cropCalendar": "Crop Calendar",
+    "pricePredict": "Price Prediction"
+  },
+  "voice": {
+    "listening": "Listening...",
+    "speak": "Speak now",
+    "voiceNav": "Voice Navigation",
+    "tapToSpeak": "Tap to speak"
+  },
+  "advisory": {
+    "title": "AI Crop Advisory",
+    "getAdvice": "Get Personalized Advice",
+    "cropType": "Crop Type",
+    "soilType": "Soil Type",
+    "location": "Your Location",
+    "season": "Current Season"
+  },
+  "risk": {
+    "title": "Risk Assessment",
+    "overall": "Overall Risk Score",
+    "weather": "Weather Risk",
+    "pest": "Pest Risk",
+    "market": "Market Risk",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High"
+  },
+  "eligibility": {
+    "title": "Scheme Eligibility Checker",
+    "check": "Check Eligibility",
+    "eligible": "You are eligible!",
+    "notEligible": "Not eligible"
+  },
+  "calendar": {
+    "title": "Smart Crop Calendar",
+    "sowing": "Sowing",
+    "fertilizer": "Fertilizer",
+    "irrigation": "Irrigation",
+    "harvest": "Harvest"
+  },
+  "prediction": {
+    "title": "Price Prediction",
+    "currentPrice": "Current Price",
+    "predictedPrice": "Predicted Price",
+    "bestTime": "Best Time to Sell",
+    "trend": "Market Trend"
+  },
+  "offline": {
+    "title": "Offline Mode",
+    "available": "App available offline",
+    "syncing": "Syncing data..."
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "common": {
+    "home": "होम",
+    "schemes": "योजनाएं",
+    "marketPrices": "बाज़ार भाव",
+    "weather": "मौसम",
+    "aiAdvisory": "AI सलाह",
+    "diseaseDetection": "रोग पहचान",
+    "dashboard": "डैशबोर्ड",
+    "login": "लॉगिन",
+    "register": "रजिस्टर",
+    "logout": "लॉगआउट",
+    "search": "खोजें",
+    "submit": "जमा करें",
+    "cancel": "रद्द करें",
+    "save": "सेव करें",
+    "loading": "लोड हो रहा है...",
+    "error": "त्रुटि",
+    "success": "सफल"
+  },
+  "hero": {
+    "title": "किसानों को तकनीक से सशक्त बनाना",
+    "subtitle": "सरकारी योजनाओं, बाज़ार भाव, मौसम अपडेट और AI फसल सलाह के लिए आपका एक-स्टॉप पोर्टल",
+    "getStarted": "शुरू करें",
+    "exploreSchemes": "योजनाएं देखें"
+  },
+  "features": {
+    "schemes": "सरकारी योजनाएं",
+    "schemesDesc": "सभी कृषि योजनाओं और सब्सिडी तक एक जगह पहुंच",
+    "marketPrices": "लाइव मंडी भाव",
+    "marketPricesDesc": "बेहतर बिक्री निर्णयों के लिए वास्तविक समय की कीमतें",
+    "weather": "मौसम पूर्वानुमान",
+    "weatherDesc": "बेहतर योजना के लिए सटीक मौसम भविष्यवाणी",
+    "aiAdvisory": "AI फसल सलाह",
+    "aiAdvisoryDesc": "AI द्वारा संचालित व्यक्तिगत सिफारिशें",
+    "diseaseDetection": "रोग पहचान",
+    "diseaseDetectionDesc": "AI-संचालित फसल रोग पहचान",
+    "riskScore": "जोखिम मूल्यांकन",
+    "riskScoreDesc": "व्यापक खेती जोखिम विश्लेषण"
+  },
+  "dashboard": {
+    "welcome": "स्वागत है",
+    "myCrops": "मेरी फसलें",
+    "addCrop": "फसल जोड़ें",
+    "cropName": "फसल का नाम",
+    "area": "क्षेत्र (एकड़)",
+    "sowingDate": "बुवाई तिथि",
+    "harvestDate": "अपेक्षित कटाई",
+    "status": "स्थिति",
+    "myQueries": "मेरे प्रश्न",
+    "submitQuery": "प्रश्न जमा करें",
+    "riskScore": "खेत जोखिम स्कोर",
+    "cropCalendar": "फसल कैलेंडर",
+    "pricePredict": "मूल्य भविष्यवाणी"
+  },
+  "voice": {
+    "listening": "सुन रहे हैं...",
+    "speak": "अब बोलें",
+    "voiceNav": "आवाज़ नेविगेशन",
+    "tapToSpeak": "बोलने के लिए टैप करें"
+  },
+  "advisory": {
+    "title": "AI फसल सलाह",
+    "getAdvice": "व्यक्तिगत सलाह प्राप्त करें",
+    "cropType": "फसल प्रकार",
+    "soilType": "मिट्टी प्रकार",
+    "location": "आपका स्थान",
+    "season": "वर्तमान मौसम"
+  },
+  "risk": {
+    "title": "जोखिम मूल्यांकन",
+    "overall": "समग्र जोखिम स्कोर",
+    "weather": "मौसम जोखिम",
+    "pest": "कीट जोखिम",
+    "market": "बाज़ार जोखिम",
+    "low": "कम",
+    "medium": "मध्यम",
+    "high": "उच्च"
+  },
+  "eligibility": {
+    "title": "योजना पात्रता जांच",
+    "check": "पात्रता जांचें",
+    "eligible": "आप पात्र हैं!",
+    "notEligible": "पात्र नहीं"
+  },
+  "calendar": {
+    "title": "स्मार्ट फसल कैलेंडर",
+    "sowing": "बुवाई",
+    "fertilizer": "खाद",
+    "irrigation": "सिंचाई",
+    "harvest": "कटाई"
+  },
+  "prediction": {
+    "title": "मूल्य भविष्यवाणी",
+    "currentPrice": "वर्तमान मूल्य",
+    "predictedPrice": "अनुमानित मूल्य",
+    "bestTime": "बेचने का सबसे अच्छा समय",
+    "trend": "बाज़ार प्रवृत्ति"
+  },
+  "offline": {
+    "title": "ऑफलाइन मोड",
+    "available": "ऐप ऑफलाइन उपलब्ध",
+    "syncing": "डेटा सिंक हो रहा..."
+  }
+}

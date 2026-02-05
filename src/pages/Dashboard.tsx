@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { RiskScoreWidget } from "@/components/RiskScoreWidget";
+import { SchemeEligibilityChecker } from "@/components/SchemeEligibilityChecker";
+import { CropCalendar } from "@/components/CropCalendar";
+import { PricePredictionWidget } from "@/components/PricePredictionWidget";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -246,6 +251,14 @@ const Dashboard = () => {
               ))}
             </div>
           )}
+
+          {/* Smart Widgets Section */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <RiskScoreWidget location={profile?.state} crops={crops.map(c => c.crop_name)} />
+            <SchemeEligibilityChecker />
+            <CropCalendar crops={crops} />
+            <PricePredictionWidget />
+          </div>
 
           {/* Main Tabs */}
           <Tabs defaultValue="crops" className="space-y-6">

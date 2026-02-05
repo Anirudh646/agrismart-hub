@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { AdminAnalytics } from "@/components/AdminAnalytics";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -350,13 +352,19 @@ const AdminDashboard = () => {
           </div>
 
           {/* Main Tabs */}
-          <Tabs defaultValue="schemes" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
+          <Tabs defaultValue="analytics" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-grid">
+              <TabsTrigger value="analytics">Analytics</TabsTrigger>
               <TabsTrigger value="schemes">Schemes</TabsTrigger>
               <TabsTrigger value="queries">Queries</TabsTrigger>
               <TabsTrigger value="alerts">Alerts</TabsTrigger>
               <TabsTrigger value="farmers">Farmers</TabsTrigger>
             </TabsList>
+
+            {/* Analytics Tab */}
+            <TabsContent value="analytics">
+              <AdminAnalytics />
+            </TabsContent>
 
             {/* Schemes Tab */}
             <TabsContent value="schemes">
