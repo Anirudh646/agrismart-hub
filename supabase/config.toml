@@ -1,1 +1,4 @@
 project_id = "mqnbbiqpsyovlzpokuvm"
+
+[functions.analyze-crop-disease]
+verify_jwt = false
