@@ -10,6 +10,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { VoiceNavigation } from "@/components/VoiceNavigation";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,6 +55,12 @@ const Navbar = () => {
             <Link to="/disease-detection" className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Disease Detection
             </Link>
+          </div>
+
+          {/* Language & Voice */}
+          <div className="hidden md:flex items-center gap-2">
+            <LanguageSwitcher />
+            <VoiceNavigation />
           </div>
 
           {/* Auth Buttons */}

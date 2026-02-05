@@ -2,3 +2,9 @@ project_id = "mqnbbiqpsyovlzpokuvm"
 
 [functions.analyze-crop-disease]
 verify_jwt = false
+
+[functions.crop-advisory]
+verify_jwt = false
+
+[functions.price-prediction]
+verify_jwt = false
