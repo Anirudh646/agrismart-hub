@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import heroImage from "@/assets/hero-farm.jpg";
 
 const HeroSection = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background Image */}
@@ -25,29 +28,30 @@ const HeroSection = () => {
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-in-up">
-            Empowering Farmers with
-            <span className="block text-accent mt-2">Digital Agriculture</span>
+            {t("hero.title")}
           </h1>
 
           <p className="text-lg md:text-xl text-primary-foreground/80 mb-8 leading-relaxed animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-            Access government schemes, real-time market prices, weather forecasts, and AI-powered crop advisory all in one place. Your complete agricultural companion.
+            {t("hero.subtitle")}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
             <Link to="/register">
               <Button variant="hero" size="xl" className="w-full sm:w-auto">
-                Get Started
+                {t("hero.getStarted")}
                 <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>
-            <Button
-              variant="outline"
-              size="xl"
-              className="w-full sm:w-auto border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
-            >
-              <Play className="w-5 h-5" />
-              Watch Demo
-            </Button>
+            <Link to="/schemes">
+              <Button
+                variant="outline"
+                size="xl"
+                className="w-full sm:w-auto border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+              >
+                <Play className="w-5 h-5" />
+                {t("hero.exploreSchemes")}
+              </Button>
+            </Link>
           </div>
 
           {/* Stats */}
