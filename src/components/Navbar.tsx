@@ -3,6 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Sprout, Menu, X, User } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +18,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, profile, isAdmin, signOut } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSignOut = async () => {
     await signOut();
@@ -38,22 +40,22 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             <Link to="/" className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              Home
+              {t("common.home")}
             </Link>
             <Link to="/schemes" className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              Schemes
+              {t("common.schemes")}
             </Link>
             <Link to="/market-prices" className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              Market Prices
+              {t("common.marketPrices")}
             </Link>
             <Link to="/weather" className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              Weather
+              {t("common.weather")}
             </Link>
             <Link to="/ai-advisory" className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              AI Advisory
+              {t("common.aiAdvisory")}
             </Link>
             <Link to="/disease-detection" className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              Disease Detection
+              {t("common.diseaseDetection")}
             </Link>
           </div>
 
@@ -83,21 +85,21 @@ const Navbar = () => {
                     </>
                   )}
                   <DropdownMenuItem onClick={() => navigate("/dashboard")}>
-                    My Dashboard
+                    {t("common.dashboard")}
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut} className="text-destructive">
-                    Logout
+                    {t("common.logout")}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
               <>
                 <Link to="/login">
-                  <Button variant="outline" size="sm">Login</Button>
+                  <Button variant="outline" size="sm">{t("common.login")}</Button>
                 </Link>
                 <Link to="/register">
-                  <Button variant="hero" size="sm">Register</Button>
+                  <Button variant="hero" size="sm">{t("common.register")}</Button>
                 </Link>
               </>
             )}
@@ -117,23 +119,29 @@ const Navbar = () => {
           <div className="md:hidden py-4 border-t border-border animate-fade-in">
             <div className="flex flex-col gap-4">
               <Link to="/" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
-                Home
+                {t("common.home")}
               </Link>
               <Link to="/schemes" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
-                Schemes
+                {t("common.schemes")}
               </Link>
               <Link to="/market-prices" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
-                Market Prices
+                {t("common.marketPrices")}
               </Link>
               <Link to="/weather" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
-                Weather
+                {t("common.weather")}
               </Link>
               <Link to="/ai-advisory" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
-                AI Advisory
+                {t("common.aiAdvisory")}
               </Link>
               <Link to="/disease-detection" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
-                Disease Detection
+                {t("common.diseaseDetection")}
               </Link>
+              
+              {/* Language & Voice for Mobile */}
+              <div className="flex items-center gap-2 py-2">
+                <LanguageSwitcher />
+                <VoiceNavigation />
+              </div>
               
               <div className="flex gap-3 pt-4 border-t border-border">
                 {user ? (
@@ -144,19 +152,19 @@ const Navbar = () => {
                       </Link>
                     )}
                     <Link to="/dashboard" className="flex-1" onClick={() => setIsOpen(false)}>
-                      <Button variant="outline" className="w-full">My Dashboard</Button>
+                      <Button variant="outline" className="w-full">{t("common.dashboard")}</Button>
                     </Link>
                     <Button variant="destructive" className="w-full" onClick={() => { handleSignOut(); setIsOpen(false); }}>
-                      Logout
+                      {t("common.logout")}
                     </Button>
                   </div>
                 ) : (
                   <>
                     <Link to="/login" className="flex-1" onClick={() => setIsOpen(false)}>
-                      <Button variant="outline" className="w-full">Login</Button>
+                      <Button variant="outline" className="w-full">{t("common.login")}</Button>
                     </Link>
                     <Link to="/register" className="flex-1" onClick={() => setIsOpen(false)}>
-                      <Button variant="hero" className="w-full">Register</Button>
+                      <Button variant="hero" className="w-full">{t("common.register")}</Button>
                     </Link>
                   </>
                 )}
