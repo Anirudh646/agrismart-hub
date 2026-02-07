@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,12 +8,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 import { BrainCircuit, Leaf, Droplets, Bug, Sparkles, Send, Loader2 } from "lucide-react";
 
 const soilTypes = ["Sandy", "Loamy", "Clay", "Silty", "Peaty", "Chalky"];
 const seasons = ["Kharif (Monsoon)", "Rabi (Winter)", "Zaid (Summer)"];
 
 const AIAdvisory = () => {
+  const { user } = useAuth();
+  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [formData, setFormData] = useState({
@@ -23,47 +28,78 @@ const AIAdvisory = () => {
     query: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [recommendations, setRecommendations] = useState<{
+    category: string;
+    icon: typeof Leaf;
+    color: string;
+    items: { name: string; confidence: number; reason: string }[];
+  }[]>([]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setShowResults(true);
-    }, 2000);
-  };
 
-  const recommendations = [
-    {
-      category: "Recommended Crops",
-      icon: Leaf,
-      color: "bg-primary/10 text-primary",
-      items: [
-        { name: "Wheat (HD-2967)", confidence: 95, reason: "Best suited for your soil type and climate" },
-        { name: "Mustard (Pusa Bold)", confidence: 88, reason: "Good yield potential with low water requirement" },
-        { name: "Chickpea (Pusa-256)", confidence: 82, reason: "Improves soil nitrogen, good market price" },
-      ],
-    },
-    {
-      category: "Fertilizer Schedule",
-      icon: Droplets,
-      color: "bg-secondary/20 text-secondary-foreground",
-      items: [
-        { name: "DAP - 50kg/acre", confidence: 90, reason: "Apply at sowing for phosphorus needs" },
-        { name: "Urea - 60kg/acre", confidence: 85, reason: "Split into 2 doses after irrigation" },
-        { name: "Potash - 20kg/acre", confidence: 75, reason: "Apply for grain quality improvement" },
-      ],
-    },
-    {
-      category: "Pest Alerts",
-      icon: Bug,
-      color: "bg-destructive/10 text-destructive",
-      items: [
-        { name: "Aphids Risk: Medium", confidence: 65, reason: "Monitor weekly, spray if infestation exceeds 10%" },
-        { name: "Yellow Rust: Low", confidence: 40, reason: "Use resistant varieties, fungicide if spots appear" },
-        { name: "Termite: Low", confidence: 30, reason: "Apply chlorpyriphos near irrigation channel" },
-      ],
-    },
-  ];
+    // Generate recommendations based on input
+    const generatedRecommendations = [
+      {
+        category: "Recommended Crops",
+        icon: Leaf,
+        color: "bg-primary/10 text-primary",
+        items: [
+          { name: "Wheat (HD-2967)", confidence: 95, reason: `Best suited for ${formData.soilType || "your"} soil in ${formData.location || "your region"}` },
+          { name: "Mustard (Pusa Bold)", confidence: 88, reason: "Good yield potential with low water requirement" },
+          { name: "Chickpea (Pusa-256)", confidence: 82, reason: "Improves soil nitrogen, good market price" },
+        ],
+      },
+      {
+        category: "Fertilizer Schedule",
+        icon: Droplets,
+        color: "bg-secondary/20 text-secondary-foreground",
+        items: [
+          { name: `DAP - ${Math.round(50 * parseFloat(formData.landSize || "1"))}kg`, confidence: 90, reason: "Apply at sowing for phosphorus needs" },
+          { name: `Urea - ${Math.round(60 * parseFloat(formData.landSize || "1"))}kg`, confidence: 85, reason: "Split into 2 doses after irrigation" },
+          { name: `Potash - ${Math.round(20 * parseFloat(formData.landSize || "1"))}kg`, confidence: 75, reason: "Apply for grain quality improvement" },
+        ],
+      },
+      {
+        category: "Pest Alerts",
+        icon: Bug,
+        color: "bg-destructive/10 text-destructive",
+        items: [
+          { name: "Aphids Risk: Medium", confidence: 65, reason: "Monitor weekly, spray if infestation exceeds 10%" },
+          { name: "Yellow Rust: Low", confidence: 40, reason: "Use resistant varieties, fungicide if spots appear" },
+          { name: "Termite: Low", confidence: 30, reason: "Apply chlorpyriphos near irrigation channel" },
+        ],
+      },
+    ];
+
+    // Save to database if user is logged in
+    if (user) {
+      const { error } = await supabase.from("farmer_advisory_requests").insert({
+        user_id: user.id,
+        location: formData.location || null,
+        soil_type: formData.soilType || null,
+        season: formData.season || null,
+        land_size: formData.landSize ? parseFloat(formData.landSize) : null,
+        current_crop: formData.currentCrop || null,
+        query: formData.query || null,
+        ai_response: generatedRecommendations as unknown as Record<string, unknown>,
+      } as never);
+
+      if (error) {
+        console.error("Error saving advisory request:", error);
+      } else {
+        toast({
+          title: "Advisory Saved",
+          description: "Your request has been recorded for future reference.",
+        });
+      }
+    }
+
+    setRecommendations(generatedRecommendations);
+    setLoading(false);
+    setShowResults(true);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -83,6 +119,11 @@ const AIAdvisory = () => {
             <p className="text-muted-foreground text-lg">
               Get personalized recommendations for crops, fertilizers, and pest control based on your farm's specific conditions.
             </p>
+            {!user && (
+              <p className="mt-4 text-sm text-amber-600 bg-amber-50 inline-block px-4 py-2 rounded-lg">
+                💡 Login to save your advisory history
+              </p>
+            )}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

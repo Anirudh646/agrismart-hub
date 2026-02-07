@@ -56,6 +56,156 @@ export type Database = {
         }
         Relationships: []
       }
+      crop_comparisons: {
+        Row: {
+          comparison_result: Json | null
+          created_at: string
+          crops_compared: string[]
+          id: string
+          location: string | null
+          season: string | null
+          user_id: string
+        }
+        Insert: {
+          comparison_result?: Json | null
+          created_at?: string
+          crops_compared: string[]
+          id?: string
+          location?: string | null
+          season?: string | null
+          user_id: string
+        }
+        Update: {
+          comparison_result?: Json | null
+          created_at?: string
+          crops_compared?: string[]
+          id?: string
+          location?: string | null
+          season?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      dose_calculations: {
+        Row: {
+          calculated_dose: number
+          created_at: string
+          crop_name: string
+          fertilizer_type: string
+          id: string
+          land_area: number
+          notes: string | null
+          soil_type: string | null
+          unit: string
+          user_id: string
+        }
+        Insert: {
+          calculated_dose: number
+          created_at?: string
+          crop_name: string
+          fertilizer_type: string
+          id?: string
+          land_area: number
+          notes?: string | null
+          soil_type?: string | null
+          unit?: string
+          user_id: string
+        }
+        Update: {
+          calculated_dose?: number
+          created_at?: string
+          crop_name?: string
+          fertilizer_type?: string
+          id?: string
+          land_area?: number
+          notes?: string | null
+          soil_type?: string | null
+          unit?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      emergency_requests: {
+        Row: {
+          admin_response: string | null
+          contact_phone: string | null
+          created_at: string
+          description: string
+          emergency_type: string
+          id: string
+          location: string | null
+          responded_at: string | null
+          responded_by: string | null
+          status: string | null
+          user_id: string
+        }
+        Insert: {
+          admin_response?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          description: string
+          emergency_type: string
+          id?: string
+          location?: string | null
+          responded_at?: string | null
+          responded_by?: string | null
+          status?: string | null
+          user_id: string
+        }
+        Update: {
+          admin_response?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          description?: string
+          emergency_type?: string
+          id?: string
+          location?: string | null
+          responded_at?: string | null
+          responded_by?: string | null
+          status?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      farmer_advisory_requests: {
+        Row: {
+          ai_response: Json | null
+          created_at: string
+          current_crop: string | null
+          id: string
+          land_size: number | null
+          location: string | null
+          query: string | null
+          season: string | null
+          soil_type: string | null
+          user_id: string
+        }
+        Insert: {
+          ai_response?: Json | null
+          created_at?: string
+          current_crop?: string | null
+          id?: string
+          land_size?: number | null
+          location?: string | null
+          query?: string | null
+          season?: string | null
+          soil_type?: string | null
+          user_id: string
+        }
+        Update: {
+          ai_response?: Json | null
+          created_at?: string
+          current_crop?: string | null
+          id?: string
+          land_size?: number | null
+          location?: string | null
+          query?: string | null
+          season?: string | null
+          soil_type?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       farmer_crops: {
         Row: {
           area_in_acres: number | null
@@ -146,6 +296,8 @@ export type Database = {
           email: string | null
           full_name: string
           id: string
+          is_active: boolean | null
+          is_verified: boolean | null
           phone: string | null
           state: string | null
           updated_at: string
@@ -160,6 +312,8 @@ export type Database = {
           email?: string | null
           full_name: string
           id?: string
+          is_active?: boolean | null
+          is_verified?: boolean | null
           phone?: string | null
           state?: string | null
           updated_at?: string
@@ -174,6 +328,8 @@ export type Database = {
           email?: string | null
           full_name?: string
           id?: string
+          is_active?: boolean | null
+          is_verified?: boolean | null
           phone?: string | null
           state?: string | null
           updated_at?: string
@@ -248,6 +404,45 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      water_plans: {
+        Row: {
+          created_at: string
+          crop_name: string
+          id: string
+          irrigation_type: string | null
+          land_area: number
+          soil_type: string | null
+          total_water_requirement: number | null
+          unit: string | null
+          user_id: string
+          water_schedule: Json | null
+        }
+        Insert: {
+          created_at?: string
+          crop_name: string
+          id?: string
+          irrigation_type?: string | null
+          land_area: number
+          soil_type?: string | null
+          total_water_requirement?: number | null
+          unit?: string | null
+          user_id: string
+          water_schedule?: Json | null
+        }
+        Update: {
+          created_at?: string
+          crop_name?: string
+          id?: string
+          irrigation_type?: string | null
+          land_area?: number
+          soil_type?: string | null
+          total_water_requirement?: number | null
+          unit?: string | null
+          user_id?: string
+          water_schedule?: Json | null
         }
         Relationships: []
       }
