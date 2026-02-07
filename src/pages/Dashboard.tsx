@@ -9,6 +9,11 @@ import { RiskScoreWidget } from "@/components/RiskScoreWidget";
 import { SchemeEligibilityChecker } from "@/components/SchemeEligibilityChecker";
 import { CropCalendar } from "@/components/CropCalendar";
 import { PricePredictionWidget } from "@/components/PricePredictionWidget";
+import { CropComparisonTool } from "@/components/CropComparisonTool";
+import { DoseCalculator } from "@/components/DoseCalculator";
+import { WaterPlanner } from "@/components/WaterPlanner";
+import { EmergencyHelpButton } from "@/components/EmergencyHelpButton";
+import WeatherWidget from "@/components/WeatherWidget";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -43,6 +48,8 @@ import {
   Trash2,
   Edit,
   Loader2,
+  Wrench,
+  Cloud,
 } from "lucide-react";
 
 interface Crop {
@@ -221,6 +228,7 @@ const Dashboard = () => {
               </p>
             </div>
             <div className="flex gap-3">
+              <EmergencyHelpButton />
               <Link to="/ai-advisory">
                 <Button variant="outline">AI Advisory</Button>
               </Link>
@@ -252,20 +260,29 @@ const Dashboard = () => {
             </div>
           )}
 
-          {/* Smart Widgets Section */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {/* Weather & Smart Widgets Section */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            <WeatherWidget />
             <RiskScoreWidget location={profile?.state} crops={crops.map(c => c.crop_name)} />
+            <PricePredictionWidget />
+          </div>
+
+          {/* Tools Widgets Section */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             <SchemeEligibilityChecker />
             <CropCalendar crops={crops} />
-            <PricePredictionWidget />
           </div>
 
           {/* Main Tabs */}
           <Tabs defaultValue="crops" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:inline-grid">
+            <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
               <TabsTrigger value="crops" className="gap-2">
                 <Sprout className="w-4 h-4" />
                 My Crops
+              </TabsTrigger>
+              <TabsTrigger value="tools" className="gap-2">
+                <Wrench className="w-4 h-4" />
+                Farm Tools
               </TabsTrigger>
               <TabsTrigger value="queries" className="gap-2">
                 <MessageSquare className="w-4 h-4" />
@@ -405,6 +422,19 @@ const Dashboard = () => {
                   )}
                 </CardContent>
               </Card>
+            </TabsContent>
+
+            {/* Farm Tools Tab */}
+            <TabsContent value="tools">
+              <div className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <CropComparisonTool />
+                  <DoseCalculator />
+                </div>
+                <div className="grid md:grid-cols-1 gap-6">
+                  <WaterPlanner />
+                </div>
+              </div>
             </TabsContent>
 
             {/* Queries Tab */}
