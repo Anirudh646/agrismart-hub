@@ -84,12 +84,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             ]);
             setProfile(profileData);
             setRoles(rolesData);
+            setIsLoading(false);
           }, 0);
         } else {
           setProfile(null);
           setRoles([]);
+          setIsLoading(false);
         }
-        setIsLoading(false);
       }
     );
 
