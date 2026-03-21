@@ -9,7 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { BrainCircuit, Leaf, Droplets, Bug, Sparkles, Send, Loader2 } from "lucide-react";
+import { BrainCircuit, Sparkles, Send, Loader2 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 const soilTypes = ["Sandy", "Loamy", "Clay", "Silty", "Peaty", "Chalky"];
 const seasons = ["Kharif (Monsoon)", "Rabi (Winter)", "Zaid (Summer)"];
@@ -19,6 +20,7 @@ const AIAdvisory = () => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [aiResponse, setAiResponse] = useState("");
   const [formData, setFormData] = useState({
     location: "",
     soilType: "",
@@ -28,77 +30,62 @@ const AIAdvisory = () => {
     query: "",
   });
 
-  const [recommendations, setRecommendations] = useState<{
-    category: string;
-    icon: typeof Leaf;
-    color: string;
-    items: { name: string; confidence: number; reason: string }[];
-  }[]>([]);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setAiResponse("");
+    setShowResults(false);
 
-    // Generate recommendations based on input
-    const generatedRecommendations = [
-      {
-        category: "Recommended Crops",
-        icon: Leaf,
-        color: "bg-primary/10 text-primary",
-        items: [
-          { name: "Wheat (HD-2967)", confidence: 95, reason: `Best suited for ${formData.soilType || "your"} soil in ${formData.location || "your region"}` },
-          { name: "Mustard (Pusa Bold)", confidence: 88, reason: "Good yield potential with low water requirement" },
-          { name: "Chickpea (Pusa-256)", confidence: 82, reason: "Improves soil nitrogen, good market price" },
-        ],
-      },
-      {
-        category: "Fertilizer Schedule",
-        icon: Droplets,
-        color: "bg-secondary/20 text-secondary-foreground",
-        items: [
-          { name: `DAP - ${Math.round(50 * parseFloat(formData.landSize || "1"))}kg`, confidence: 90, reason: "Apply at sowing for phosphorus needs" },
-          { name: `Urea - ${Math.round(60 * parseFloat(formData.landSize || "1"))}kg`, confidence: 85, reason: "Split into 2 doses after irrigation" },
-          { name: `Potash - ${Math.round(20 * parseFloat(formData.landSize || "1"))}kg`, confidence: 75, reason: "Apply for grain quality improvement" },
-        ],
-      },
-      {
-        category: "Pest Alerts",
-        icon: Bug,
-        color: "bg-destructive/10 text-destructive",
-        items: [
-          { name: "Aphids Risk: Medium", confidence: 65, reason: "Monitor weekly, spray if infestation exceeds 10%" },
-          { name: "Yellow Rust: Low", confidence: 40, reason: "Use resistant varieties, fungicide if spots appear" },
-          { name: "Termite: Low", confidence: 30, reason: "Apply chlorpyriphos near irrigation channel" },
-        ],
-      },
-    ];
+    try {
+      const { data, error: fnError } = await supabase.functions.invoke("crop-advisory", {
+        body: {
+          cropName: formData.currentCrop,
+          soilType: formData.soilType,
+          location: formData.location,
+          season: formData.season,
+          area: formData.landSize,
+          currentCrops: formData.currentCrop ? [formData.currentCrop] : [],
+        },
+      });
 
-    // Save to database if user is logged in
-    if (user) {
-      const { error } = await supabase.from("farmer_advisory_requests").insert({
-        user_id: user.id,
-        location: formData.location || null,
-        soil_type: formData.soilType || null,
-        season: formData.season || null,
-        land_size: formData.landSize ? parseFloat(formData.landSize) : null,
-        current_crop: formData.currentCrop || null,
-        query: formData.query || null,
-        ai_response: generatedRecommendations as unknown as Record<string, unknown>,
-      } as never);
+      if (fnError) throw fnError;
 
-      if (error) {
-        console.error("Error saving advisory request:", error);
-      } else {
-        toast({
-          title: "Advisory Saved",
-          description: "Your request has been recorded for future reference.",
-        });
+      const advice = data?.advice || "No recommendations available. Please try again.";
+      setAiResponse(advice);
+      setShowResults(true);
+
+      // Save to database if user is logged in
+      if (user) {
+        const { error } = await supabase.from("farmer_advisory_requests").insert({
+          user_id: user.id,
+          location: formData.location || null,
+          soil_type: formData.soilType || null,
+          season: formData.season || null,
+          land_size: formData.landSize ? parseFloat(formData.landSize) : null,
+          current_crop: formData.currentCrop || null,
+          query: formData.query || null,
+          ai_response: { advice } as unknown as Record<string, unknown>,
+        } as never);
+
+        if (error) {
+          console.error("Error saving advisory request:", error);
+        } else {
+          toast({
+            title: "Advisory Saved",
+            description: "Your request has been recorded for future reference.",
+          });
+        }
       }
+    } catch (error) {
+      console.error("AI Advisory error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to get recommendations. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
     }
-
-    setRecommendations(generatedRecommendations);
-    setLoading(false);
-    setShowResults(true);
   };
 
   return (
@@ -229,12 +216,12 @@ const AIAdvisory = () => {
                     {loading ? (
                       <>
                         <Loader2 className="w-5 h-5 animate-spin" />
-                        Analyzing...
+                        Analyzing with AI...
                       </>
                     ) : (
                       <>
                         <Send className="w-5 h-5" />
-                        Get Recommendations
+                        Get AI Recommendations
                       </>
                     )}
                   </Button>
@@ -253,35 +240,21 @@ const AIAdvisory = () => {
                   </div>
                 </div>
               ) : (
-                recommendations.map((rec, index) => (
-                  <Card key={index} className="border border-border/50 animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
-                    <CardHeader className="pb-3">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-xl ${rec.color} flex items-center justify-center`}>
-                          <rec.icon className="w-5 h-5" />
-                        </div>
-                        <CardTitle className="text-lg">{rec.category}</CardTitle>
+                <Card className="border border-border/50 animate-fade-in-up">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                        <BrainCircuit className="w-5 h-5" />
                       </div>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      {rec.items.map((item, idx) => (
-                        <div key={idx} className="bg-muted/50 rounded-xl p-4">
-                          <div className="flex items-center justify-between mb-2">
-                            <p className="font-medium text-foreground">{item.name}</p>
-                            <span className="text-sm font-semibold text-primary">{item.confidence}%</span>
-                          </div>
-                          <p className="text-sm text-muted-foreground">{item.reason}</p>
-                          <div className="mt-2 w-full h-2 rounded-full bg-muted overflow-hidden">
-                            <div
-                              className="h-full rounded-full bg-primary transition-all duration-500"
-                              style={{ width: `${item.confidence}%` }}
-                            />
-                          </div>
-                        </div>
-                      ))}
-                    </CardContent>
-                  </Card>
-                ))
+                      <CardTitle className="text-lg">AI Recommendations</CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:text-foreground prose-p:text-muted-foreground prose-li:text-muted-foreground prose-strong:text-foreground">
+                      <ReactMarkdown>{aiResponse}</ReactMarkdown>
+                    </div>
+                  </CardContent>
+                </Card>
               )}
             </div>
           </div>
