@@ -53,6 +53,7 @@ import {
   Shield,
   UserCheck,
   UserX,
+  Droplets,
 } from "lucide-react";
 
 interface Scheme {
