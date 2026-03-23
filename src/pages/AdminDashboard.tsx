@@ -127,6 +127,18 @@ interface AdvisoryRequest {
   created_at: string;
 }
 
+interface WaterPlan {
+  id: string;
+  user_id: string;
+  crop_name: string;
+  land_area: number;
+  soil_type: string | null;
+  irrigation_type: string | null;
+  total_water_requirement: number | null;
+  unit: string | null;
+  created_at: string;
+}
+
 const AdminDashboard = () => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
