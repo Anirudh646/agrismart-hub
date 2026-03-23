@@ -148,6 +148,7 @@ const AdminDashboard = () => {
   const [farmers, setFarmers] = useState<Profile[]>([]);
   const [emergencyRequests, setEmergencyRequests] = useState<EmergencyRequest[]>([]);
   const [advisoryRequests, setAdvisoryRequests] = useState<AdvisoryRequest[]>([]);
+  const [waterPlans, setWaterPlans] = useState<WaterPlan[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showAddScheme, setShowAddScheme] = useState(false);
   const [showAddAlert, setShowAddAlert] = useState(false);
