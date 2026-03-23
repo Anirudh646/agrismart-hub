@@ -1126,6 +1126,60 @@ const AdminDashboard = () => {
                 </CardContent>
               </Card>
             </TabsContent>
+
+            {/* Water Plans Tab */}
+            <TabsContent value="waterplans">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Droplets className="w-5 h-5" />
+                    Water Plans ({waterPlans.length})
+                  </CardTitle>
+                  <CardDescription>View all farmer water planning data</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Farmer ID</TableHead>
+                        <TableHead>Crop</TableHead>
+                        <TableHead>Land Area</TableHead>
+                        <TableHead>Soil Type</TableHead>
+                        <TableHead>Irrigation</TableHead>
+                        <TableHead>Water Requirement</TableHead>
+                        <TableHead>Date</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {waterPlans.map((plan) => (
+                        <TableRow key={plan.id}>
+                          <TableCell className="font-mono text-xs">{plan.user_id.slice(0, 8)}...</TableCell>
+                          <TableCell className="font-medium">{plan.crop_name}</TableCell>
+                          <TableCell>{plan.land_area} acres</TableCell>
+                          <TableCell>{plan.soil_type || "—"}</TableCell>
+                          <TableCell>{plan.irrigation_type || "—"}</TableCell>
+                          <TableCell>
+                            {plan.total_water_requirement
+                              ? `${plan.total_water_requirement} ${plan.unit || "liters"}`
+                              : "—"}
+                          </TableCell>
+                          <TableCell className="text-muted-foreground">
+                            {new Date(plan.created_at).toLocaleDateString()}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                      {waterPlans.length === 0 && (
+                        <TableRow>
+                          <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
+                            No water plans found
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </TabsContent>
           </Tabs>
         </div>
       </main>
