@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ const ForgotPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSent, setIsSent] = useState(false);
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,17 +25,10 @@ const ForgotPassword = () => {
     });
 
     if (error) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
+      toast({ title: t("common.error"), description: error.message, variant: "destructive" });
     } else {
       setIsSent(true);
-      toast({
-        title: "Email sent",
-        description: "Check your inbox for the password reset link.",
-      });
+      toast({ title: t("forgotPassword.toastTitle"), description: t("forgotPassword.toastDesc") });
     }
 
     setIsLoading(false);
@@ -42,12 +37,9 @@ const ForgotPassword = () => {
   return (
     <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <Link
-          to="/login"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors"
-        >
+        <Link to="/login" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors">
           <ArrowLeft className="w-4 h-4" />
-          Back to Login
+          {t("forgotPassword.backToLogin")}
         </Link>
 
         <Card className="border-0 shadow-xl">
@@ -57,49 +49,33 @@ const ForgotPassword = () => {
                 <Sprout className="w-7 h-7 text-primary-foreground" />
               </div>
             </Link>
-            <CardTitle className="text-2xl font-bold">Forgot Password</CardTitle>
-            <CardDescription>Enter your email to receive a password reset link</CardDescription>
+            <CardTitle className="text-2xl font-bold">{t("forgotPassword.title")}</CardTitle>
+            <CardDescription>{t("forgotPassword.subtitle")}</CardDescription>
           </CardHeader>
 
           <CardContent className="pt-6">
             {isSent ? (
               <div className="text-center space-y-4">
                 <CheckCircle className="w-16 h-16 text-primary mx-auto" />
-                <p className="text-foreground font-medium">Reset link sent!</p>
+                <p className="text-foreground font-medium">{t("forgotPassword.successTitle")}</p>
                 <p className="text-sm text-muted-foreground">
-                  Check your email at <strong>{email}</strong> for the password reset link.
+                  {t("forgotPassword.successDesc")} <strong>{email}</strong> {t("forgotPassword.successDescSuffix")}
                 </p>
                 <Button variant="outline" className="w-full" onClick={() => setIsSent(false)}>
-                  Send again
+                  {t("forgotPassword.sendAgain")}
                 </Button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
+                  <Label htmlFor="email">{t("forgotPassword.emailLabel")}</Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="Enter your email"
-                      className="pl-10 h-12"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
+                    <Input id="email" type="email" placeholder={t("forgotPassword.emailPlaceholder")} className="pl-10 h-12" value={email} onChange={(e) => setEmail(e.target.value)} required />
                   </div>
                 </div>
-
                 <Button type="submit" variant="hero" className="w-full" size="lg" disabled={isLoading}>
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                      Sending...
-                    </>
-                  ) : (
-                    "Send Reset Link"
-                  )}
+                  {isLoading ? (<><Loader2 className="w-4 h-4 animate-spin mr-2" />{t("forgotPassword.sending")}</>) : t("forgotPassword.sendButton")}
                 </Button>
               </form>
             )}
