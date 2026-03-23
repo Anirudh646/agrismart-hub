@@ -184,13 +184,14 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const [schemesRes, queriesRes, alertsRes, farmersRes, emergencyRes, advisoryRes] = await Promise.all([
+      const [schemesRes, queriesRes, alertsRes, farmersRes, emergencyRes, advisoryRes, waterRes] = await Promise.all([
         supabase.from("schemes").select("*").order("created_at", { ascending: false }),
         supabase.from("farmer_queries").select("*").order("created_at", { ascending: false }),
         supabase.from("alerts").select("*").order("created_at", { ascending: false }),
         supabase.from("profiles").select("*").order("created_at", { ascending: false }),
         supabase.from("emergency_requests").select("*").order("created_at", { ascending: false }),
         supabase.from("farmer_advisory_requests").select("*").order("created_at", { ascending: false }),
+        supabase.from("water_plans").select("*").order("created_at", { ascending: false }),
       ]);
 
       if (schemesRes.data) setSchemes(schemesRes.data);
