@@ -200,6 +200,7 @@ const AdminDashboard = () => {
       if (farmersRes.data) setFarmers(farmersRes.data as Profile[]);
       if (emergencyRes.data) setEmergencyRequests(emergencyRes.data as EmergencyRequest[]);
       if (advisoryRes.data) setAdvisoryRequests(advisoryRes.data as AdvisoryRequest[]);
+      if (waterRes.data) setWaterPlans(waterRes.data as WaterPlan[]);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
