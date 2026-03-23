@@ -53,6 +53,7 @@ import {
   Shield,
   UserCheck,
   UserX,
+  Droplets,
 } from "lucide-react";
 
 interface Scheme {
@@ -126,6 +127,18 @@ interface AdvisoryRequest {
   created_at: string;
 }
 
+interface WaterPlan {
+  id: string;
+  user_id: string;
+  crop_name: string;
+  land_area: number;
+  soil_type: string | null;
+  irrigation_type: string | null;
+  total_water_requirement: number | null;
+  unit: string | null;
+  created_at: string;
+}
+
 const AdminDashboard = () => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
@@ -135,6 +148,7 @@ const AdminDashboard = () => {
   const [farmers, setFarmers] = useState<Profile[]>([]);
   const [emergencyRequests, setEmergencyRequests] = useState<EmergencyRequest[]>([]);
   const [advisoryRequests, setAdvisoryRequests] = useState<AdvisoryRequest[]>([]);
+  const [waterPlans, setWaterPlans] = useState<WaterPlan[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showAddScheme, setShowAddScheme] = useState(false);
   const [showAddAlert, setShowAddAlert] = useState(false);
@@ -170,13 +184,14 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const [schemesRes, queriesRes, alertsRes, farmersRes, emergencyRes, advisoryRes] = await Promise.all([
+      const [schemesRes, queriesRes, alertsRes, farmersRes, emergencyRes, advisoryRes, waterRes] = await Promise.all([
         supabase.from("schemes").select("*").order("created_at", { ascending: false }),
         supabase.from("farmer_queries").select("*").order("created_at", { ascending: false }),
         supabase.from("alerts").select("*").order("created_at", { ascending: false }),
         supabase.from("profiles").select("*").order("created_at", { ascending: false }),
         supabase.from("emergency_requests").select("*").order("created_at", { ascending: false }),
         supabase.from("farmer_advisory_requests").select("*").order("created_at", { ascending: false }),
+        supabase.from("water_plans").select("*").order("created_at", { ascending: false }),
       ]);
 
       if (schemesRes.data) setSchemes(schemesRes.data);
@@ -185,6 +200,7 @@ const AdminDashboard = () => {
       if (farmersRes.data) setFarmers(farmersRes.data as Profile[]);
       if (emergencyRes.data) setEmergencyRequests(emergencyRes.data as EmergencyRequest[]);
       if (advisoryRes.data) setAdvisoryRequests(advisoryRes.data as AdvisoryRequest[]);
+      if (waterRes.data) setWaterPlans(waterRes.data as WaterPlan[]);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -494,12 +510,13 @@ const AdminDashboard = () => {
 
           {/* Main Tabs */}
           <Tabs defaultValue="analytics" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-7 lg:w-auto lg:inline-grid">
+            <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8 lg:w-auto lg:inline-grid">
               <TabsTrigger value="analytics">Analytics</TabsTrigger>
               <TabsTrigger value="farmers">Farmers</TabsTrigger>
               <TabsTrigger value="queries">Queries</TabsTrigger>
               <TabsTrigger value="emergency">Emergency</TabsTrigger>
               <TabsTrigger value="advisory">Advisory</TabsTrigger>
+              <TabsTrigger value="waterplans">Water Plans</TabsTrigger>
               <TabsTrigger value="schemes">Schemes</TabsTrigger>
               <TabsTrigger value="alerts">Alerts</TabsTrigger>
             </TabsList>
@@ -1104,6 +1121,60 @@ const AdminDashboard = () => {
                           </TableCell>
                         </TableRow>
                       ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Water Plans Tab */}
+            <TabsContent value="waterplans">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Droplets className="w-5 h-5" />
+                    Water Plans ({waterPlans.length})
+                  </CardTitle>
+                  <CardDescription>View all farmer water planning data</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Farmer ID</TableHead>
+                        <TableHead>Crop</TableHead>
+                        <TableHead>Land Area</TableHead>
+                        <TableHead>Soil Type</TableHead>
+                        <TableHead>Irrigation</TableHead>
+                        <TableHead>Water Requirement</TableHead>
+                        <TableHead>Date</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {waterPlans.map((plan) => (
+                        <TableRow key={plan.id}>
+                          <TableCell className="font-mono text-xs">{plan.user_id.slice(0, 8)}...</TableCell>
+                          <TableCell className="font-medium">{plan.crop_name}</TableCell>
+                          <TableCell>{plan.land_area} acres</TableCell>
+                          <TableCell>{plan.soil_type || "—"}</TableCell>
+                          <TableCell>{plan.irrigation_type || "—"}</TableCell>
+                          <TableCell>
+                            {plan.total_water_requirement
+                              ? `${plan.total_water_requirement} ${plan.unit || "liters"}`
+                              : "—"}
+                          </TableCell>
+                          <TableCell className="text-muted-foreground">
+                            {new Date(plan.created_at).toLocaleDateString()}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                      {waterPlans.length === 0 && (
+                        <TableRow>
+                          <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
+                            No water plans found
+                          </TableCell>
+                        </TableRow>
+                      )}
                     </TableBody>
                   </Table>
                 </CardContent>
