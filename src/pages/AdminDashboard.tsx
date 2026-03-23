@@ -510,12 +510,13 @@ const AdminDashboard = () => {
 
           {/* Main Tabs */}
           <Tabs defaultValue="analytics" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-7 lg:w-auto lg:inline-grid">
+            <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8 lg:w-auto lg:inline-grid">
               <TabsTrigger value="analytics">Analytics</TabsTrigger>
               <TabsTrigger value="farmers">Farmers</TabsTrigger>
               <TabsTrigger value="queries">Queries</TabsTrigger>
               <TabsTrigger value="emergency">Emergency</TabsTrigger>
               <TabsTrigger value="advisory">Advisory</TabsTrigger>
+              <TabsTrigger value="waterplans">Water Plans</TabsTrigger>
               <TabsTrigger value="schemes">Schemes</TabsTrigger>
               <TabsTrigger value="alerts">Alerts</TabsTrigger>
             </TabsList>
