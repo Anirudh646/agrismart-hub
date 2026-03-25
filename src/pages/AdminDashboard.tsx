@@ -275,17 +275,17 @@ const AdminDashboard = () => {
     const { error } = await supabase.from("emergency_requests").update({
       admin_response: emergencyResponse, responded_by: user.id,
       responded_at: new Date().toISOString(), status: "resolved",
-    } as never).eq("id", selectedEmergency.id);
+    }).eq("id", selectedEmergency.id);
     if (!error) { toast({ title: "Emergency resolved!" }); setSelectedEmergency(null); setEmergencyResponse(""); fetchData(); }
   };
 
   const handleToggleFarmerStatus = async (farmerId: string, currentStatus: boolean) => {
-    const { error } = await supabase.from("profiles").update({ is_active: !currentStatus } as never).eq("id", farmerId);
+    const { error } = await supabase.from("profiles").update({ is_active: !currentStatus }).eq("id", farmerId);
     if (!error) { toast({ title: `Farmer ${!currentStatus ? "activated" : "deactivated"}` }); fetchData(); }
   };
 
   const handleVerifyFarmer = async (farmerId: string) => {
-    const { error } = await supabase.from("profiles").update({ is_verified: true } as never).eq("id", farmerId);
+    const { error } = await supabase.from("profiles").update({ is_verified: true }).eq("id", farmerId);
     if (!error) { toast({ title: "Farmer verified!" }); fetchData(); }
   };
 
