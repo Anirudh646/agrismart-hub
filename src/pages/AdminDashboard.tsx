@@ -280,12 +280,12 @@ const AdminDashboard = () => {
   };
 
   const handleToggleFarmerStatus = async (farmerId: string, currentStatus: boolean) => {
-    const { error } = await supabase.from("profiles").update({ is_active: !currentStatus }).eq("user_id", farmerId);
+    const { error } = await supabase.from("profiles").update({ is_active: !currentStatus }).eq("id", farmerId);
     if (!error) { toast({ title: `Farmer ${!currentStatus ? "activated" : "deactivated"}` }); fetchData(); }
   };
 
   const handleVerifyFarmer = async (farmerId: string) => {
-    const { error } = await supabase.from("profiles").update({ is_verified: true }).eq("user_id", farmerId);
+    const { error } = await supabase.from("profiles").update({ is_verified: true }).eq("id", farmerId);
     if (!error) { toast({ title: "Farmer verified!" }); fetchData(); }
   };
 
