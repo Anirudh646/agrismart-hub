@@ -42,21 +42,6 @@ const Navbar = () => {
             <Link to="/" className="text-muted-foreground hover:text-primary transition-colors font-medium">
               {t("common.home")}
             </Link>
-            <Link to="/schemes" className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              {t("common.schemes")}
-            </Link>
-            <Link to="/market-prices" className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              {t("common.marketPrices")}
-            </Link>
-            <Link to="/weather" className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              {t("common.weather")}
-            </Link>
-            <Link to="/ai-advisory" className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              {t("common.aiAdvisory")}
-            </Link>
-            <Link to="/disease-detection" className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              {t("common.diseaseDetection")}
-            </Link>
           </div>
 
           {/* Language & Voice */}
@@ -120,21 +105,6 @@ const Navbar = () => {
             <div className="flex flex-col gap-4">
               <Link to="/" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
                 {t("common.home")}
-              </Link>
-              <Link to="/schemes" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
-                {t("common.schemes")}
-              </Link>
-              <Link to="/market-prices" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
-                {t("common.marketPrices")}
-              </Link>
-              <Link to="/weather" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
-                {t("common.weather")}
-              </Link>
-              <Link to="/ai-advisory" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
-                {t("common.aiAdvisory")}
-              </Link>
-              <Link to="/disease-detection" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
-                {t("common.diseaseDetection")}
               </Link>
               
               {/* Language & Voice for Mobile */}
