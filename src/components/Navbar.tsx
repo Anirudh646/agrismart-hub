@@ -43,10 +43,10 @@ const Navbar = () => {
               {t("common.home")}
             </Link>
             <a href="#about" className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              About
+              {t("nav.about")}
             </a>
             <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              Contact
+              {t("nav.contact")}
             </a>
           </div>
 
@@ -113,10 +113,10 @@ const Navbar = () => {
                 {t("common.home")}
               </Link>
               <a href="#about" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
-                About
+                {t("nav.about")}
               </a>
               <a href="#contact" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
-                Contact
+                {t("nav.contact")}
               </a>
               
               {/* Language & Voice for Mobile */}

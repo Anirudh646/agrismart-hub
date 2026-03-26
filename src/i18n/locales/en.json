@@ -97,6 +97,27 @@
     "bestTime": "Best Time to Sell",
     "trend": "Market Trend"
   },
+  "nav": {
+    "about": "About",
+    "contact": "Contact"
+  },
+  "about": {
+    "title": "About KrishiSathi",
+    "subtitle": "KrishiSathi is an AI-powered platform built to empower Indian farmers with smart tools, real-time data, and government scheme access — all in one place.",
+    "aiTitle": "AI-Powered Advisory",
+    "aiDesc": "Get personalized crop recommendations, disease detection, and farming tips powered by advanced AI.",
+    "marketTitle": "Market Intelligence",
+    "marketDesc": "Track real-time market prices, price predictions, and crop comparison tools to maximize your profits.",
+    "schemesTitle": "Government Schemes",
+    "schemesDesc": "Check eligibility and apply for government schemes designed for farmers — never miss a benefit."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Have questions or need support? Reach out to us anytime.",
+    "email": "Email",
+    "phone": "Phone",
+    "location": "Location"
+  },
   "offline": {
     "title": "Offline Mode",
     "available": "App available offline",
