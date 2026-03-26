@@ -42,6 +42,12 @@ const Navbar = () => {
             <Link to="/" className="text-muted-foreground hover:text-primary transition-colors font-medium">
               {t("common.home")}
             </Link>
+            <a href="#about" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+              About
+            </a>
+            <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+              Contact
+            </a>
           </div>
 
           {/* Language & Voice */}
@@ -106,6 +112,12 @@ const Navbar = () => {
               <Link to="/" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
                 {t("common.home")}
               </Link>
+              <a href="#about" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
+                About
+              </a>
+              <a href="#contact" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
+                Contact
+              </a>
               
               {/* Language & Voice for Mobile */}
               <div className="flex items-center gap-2 py-2">
