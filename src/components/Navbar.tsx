@@ -39,13 +39,13 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <Link to="/" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+            <Link to="/" className="text-muted-foreground hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md transition-colors font-medium" aria-label={t("common.home")}>
               {t("common.home")}
             </Link>
-            <a href="#about" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+            <a href="#about" className="text-muted-foreground hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md transition-colors font-medium" aria-label={t("nav.about")}>
               {t("nav.about")}
             </a>
-            <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+            <a href="#contact" className="text-muted-foreground hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md transition-colors font-medium" aria-label={t("nav.contact")}>
               {t("nav.contact")}
             </a>
           </div>
@@ -109,13 +109,13 @@ const Navbar = () => {
         {isOpen && (
           <div className="md:hidden py-4 border-t border-border animate-fade-in">
             <div className="flex flex-col gap-4">
-              <Link to="/" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
+              <Link to="/" className="text-foreground hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md transition-colors font-medium py-2" onClick={() => setIsOpen(false)} aria-label={t("common.home")}>
                 {t("common.home")}
               </Link>
-              <a href="#about" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
+              <a href="#about" className="text-foreground hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md transition-colors font-medium py-2" onClick={() => setIsOpen(false)} aria-label={t("nav.about")}>
                 {t("nav.about")}
               </a>
-              <a href="#contact" className="text-foreground hover:text-primary transition-colors font-medium py-2" onClick={() => setIsOpen(false)}>
+              <a href="#contact" className="text-foreground hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md transition-colors font-medium py-2" onClick={() => setIsOpen(false)} aria-label={t("nav.contact")}>
                 {t("nav.contact")}
               </a>
               
