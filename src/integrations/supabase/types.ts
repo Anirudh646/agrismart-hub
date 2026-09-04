@@ -56,6 +56,33 @@ export type Database = {
         }
         Relationships: []
       }
+      assistant_chats: {
+        Row: {
+          answer: string
+          created_at: string
+          id: string
+          language: string | null
+          question: string
+          user_id: string
+        }
+        Insert: {
+          answer: string
+          created_at?: string
+          id?: string
+          language?: string | null
+          question: string
+          user_id: string
+        }
+        Update: {
+          answer?: string
+          created_at?: string
+          id?: string
+          language?: string | null
+          question?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       crop_comparisons: {
         Row: {
           comparison_result: Json | null
@@ -163,6 +190,51 @@ export type Database = {
           responded_at?: string | null
           responded_by?: string | null
           status?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      farm_finance_entries: {
+        Row: {
+          amount: number
+          category: string | null
+          created_at: string
+          crop_name: string | null
+          entry_date: string
+          entry_type: string
+          id: string
+          note: string | null
+          quantity: number | null
+          unit: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          category?: string | null
+          created_at?: string
+          crop_name?: string | null
+          entry_date?: string
+          entry_type?: string
+          id?: string
+          note?: string | null
+          quantity?: number | null
+          unit?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          category?: string | null
+          created_at?: string
+          crop_name?: string | null
+          entry_date?: string
+          entry_type?: string
+          id?: string
+          note?: string | null
+          quantity?: number | null
+          unit?: string | null
+          updated_at?: string
           user_id?: string
         }
         Relationships: []
@@ -282,6 +354,145 @@ export type Database = {
           responded_by?: string | null
           status?: string | null
           subject?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      forum_post_likes: {
+        Row: {
+          created_at: string
+          id: string
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          post_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_post_likes_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "forum_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_posts: {
+        Row: {
+          category: string | null
+          content: string
+          created_at: string
+          crop_name: string | null
+          id: string
+          likes_count: number
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category?: string | null
+          content: string
+          created_at?: string
+          crop_name?: string | null
+          id?: string
+          likes_count?: number
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string | null
+          content?: string
+          created_at?: string
+          crop_name?: string | null
+          id?: string
+          likes_count?: number
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      forum_replies: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          post_id: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_replies_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "forum_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      price_alerts: {
+        Row: {
+          created_at: string
+          crop_name: string
+          direction: string
+          id: string
+          is_active: boolean
+          market: string | null
+          target_price: number
+          triggered_at: string | null
+          triggered_price: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          crop_name: string
+          direction?: string
+          id?: string
+          is_active?: boolean
+          market?: string | null
+          target_price: number
+          triggered_at?: string | null
+          triggered_price?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          crop_name?: string
+          direction?: string
+          id?: string
+          is_active?: boolean
+          market?: string | null
+          target_price?: number
+          triggered_at?: string | null
+          triggered_price?: number | null
           updated_at?: string
           user_id?: string
         }
